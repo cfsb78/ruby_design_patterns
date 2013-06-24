@@ -1,0 +1,58 @@
+**** TEMPLATE METHOD *****
+
+General Idea:
+Build an abstract base class with a method that contains a
+skeleton method to drive the processing.  The processing will varies by
+making calls to abstract methods.  These methods are supplied by subclasses
+and variations are chosendused by using selecting appropriate sublcass.
+
+Skeleton will contain all information/flow that does not change between
+variations.  Subclasses will contain mostly information that changes 
+between implementations.
+
+In this folder:
+
+./better-code/report.rb           Contains skeleton method 'output_report'
+                                  and abastract method definitions that
+								  are to be implemented by subclasses
+
+./better-code/HTMLReport.rb	      Subclass that inherits from Report class
+								  defined in report.rb.  It contains 
+								  definitions for methods that define
+								  the appropriate format for the HTML 
+								  report.  These methods are called from
+								  the Report skeletal class (output_report)
+
+./better-code/PlainTextReport.rb  Subclass that inherits from Report class.
+								  Contains definitions for methods that 
+								  define appropriate format for plain text
+								  report.  These methods are called from the								 
+								  Report skeletal class (output_report)
+
+
+Recipe For Using Template Pattern:
+
+- Start with one variation and code it as if it were the only case requred
+  (in example here, consider coding just the HTML report implementation)
+
+- Refactor the method that will become the skeleton/template method
+  by extracting variable parts into other methods.
+
+- Create subclass for first case and move variable methods to this class
+
+- Add subclass for each variation
+
+
+** Avoid creating template class that requires subclasses to override
+a huge number of methods to cover every possibility. 
+
+** Do not create template class that has a large number of 
+overridable hook methods that will never be overridden
+
+
+Other Examples:
+ - Ruby WEBrick's GenericServer class implements all details of
+ being a network server. For specific implementation, GenericServer
+ is extended and the run method is overriden.:wq
+ 
+
