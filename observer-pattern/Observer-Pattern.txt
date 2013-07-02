@@ -1,0 +1,59 @@
+OBSERVER PATTERN:
+
+The observer pattern can be used to help inform multiple objects when another object's st
+changes.  The subject object is the object which other objects are interested in.  The 
+observer objects are the object interested in the subject object.  The subject object 
+maintains an array of observers.  When a change is made to its state, it then calls 
+an 'update' method belonging to the observing objects with itself or its data as the
+argument.  This allows any number of objects to listen for changes in the subject 
+without having to modify the subject's class.
+
+
+bad-code/*.rb                       Contains code that does not use the observer pattern.
+                                    In this code, as observer's are added, the subject
+                                    class would require an update for each observer
+
+better-code/*.rb                    This code contains a simple implementation of the 
+                                    observer pattern.  The Employee class maintains an
+                                    array of observers and calls their update method
+                                    when there is a change in the Employee salary
+
+best-code/*.rb                      This code contains an example of a generic 
+                                    implementation of the observer pattern that can
+                                    be used for any class.  It also contains an example
+                                    of how Ruby's builtin Observable module can be used
+                                    to implement the Observer pattern
+
+PULL Vs PUSH:
+The observer pattern can be implemented as a pull method or push method.  The pull method
+requires the observer to pull whatever details are changed out of the subject instance.
+This is implemented as a method that takes the subject instance as its only argument
+
+observer.update(self)
+
+The push method involves the subject to send observers additional details about the 
+change.  It may involve multiple update methods.
+
+observer.update(self, :salary_changed, old_salary, new_salary)
+
+observer.update_salary(self, old_salary, new_salary)
+observer.update_title(self, old_title, new_title)
+
+Using the push method requires less work from observers and makes it easier for them to
+track what is happening.  The main disadvantage may be that not all of the observers are
+interested in the additional details provided, resulting in wasted effort.
+
+
+Gotcha's:
+*  Problems with timing/frequency of update
+*  Subject should be careful to only send out updates when necessary (an actual change
+   has occurred)
+*  Consistency issues may arise.  This may be avoided by waiting until a consistent
+   set of changes is complete before updating.
+*  Remember that observers may raise execptions if not they are not well behaved. Avoid 
+   when possible
+
+Examples:
+
+ActiveRecord uses the Observer method to notify clients of when database changes have
+occurred.  Clients inherit from ActiveRecord::Observer
