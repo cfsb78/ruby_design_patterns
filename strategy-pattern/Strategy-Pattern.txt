@@ -5,7 +5,7 @@ Idea is to pull the algorithm out into a seperate object.  A family of objects r
 
 In the Report example, the strategy pattern can be used to pull out a set of strategies and relieve the main class of any responsibility or knowledge of the report file format.  Unlike the template pattern, the strategy pattern uses composition and delegation instead of inheritance.  This makes it easy to switch stategies at runtime by simply swapping startegy objects.
 
-Sharing Data Between Context Object and Strategy Objects
+Sharing Data Between Context Object and Strategy Objects:
 Unlike the template pattern, the strategy pattern does not use inheritance and thus requires additional considerations for getting access to the user object's data.  There are two approaches that can be used to acheive this.
 
 	1. Pass all necesssary data to strategy object through arguments to the functions call.  This is nice because it allows complete seperation, though it can get hairy when a lot of complex data is needed to be shared.
@@ -14,25 +14,16 @@ Unlike the template pattern, the strategy pattern does not use inheritance and t
 In this folder:
 
 
-./better-code/report.rb           Contains skeleton method 'output_report'
-                                  and abastract method definitions that
-								  are to be implemented by subclasses
+./with_classes/*.rb                  Contains code for implementing strategy patterns where each strategy object is defined using a unique class
 
-./better-code/HTMLReport.rb	      Subclass that inherits from Report class
-								  defined in report.rb.  It contains 
-								  definitions for methods that define
-								  the appropriate format for the HTML 
-								  report.  These methods are called from
-								  the Report skeletal class (output_report)
-
-./better-code/PlainTextReport.rb  Subclass that inherits from Report class.
-								  Contains definitions for methods that 
-								  define appropriate format for plain text
-								  report.  These methods are called from the								 
-								  Report skeletal class (output_report)
+./with_proc/*.rb                     Contains code where each strategy object is a Proc object 
 
 
-Recipe For Using Template Pattern:
+Gotcha's with Strategy Pattern:
+*  Strategy object should be a self contained set of code to accomplish a specific task. 
+*  Always allow for easily adding additional strategy
+*  Avoid coupling context class and strategy classes to closely with one another.
 
 Other Examples:
- 
+rdoc utility uses the Strategy pattern to extract documentation from many types of programs (Ruby, C, Fortran, etc.)
+It uses a strategy object for parsing each of these.  It also allows for multiple output formats.  Each output uses a strategy object to handle outputting and correct formatting.
